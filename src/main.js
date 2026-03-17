@@ -9,6 +9,10 @@ const statusText = statusBar.querySelector('.status-text');
 const closeBtn = document.getElementById('close-btn');
 const sendBtn = form.querySelector('.send-btn');
 const stealthToggle = document.getElementById('stealth-toggle');
+const clearBtn = document.getElementById('clear-btn');
+
+// Chat history state
+let chatHistory = [];
 
 // Load on startup
 window.addEventListener('DOMContentLoaded', () => {
@@ -66,10 +70,22 @@ form.addEventListener('submit', async (e) => {
     // Disable click-through while processing
     await invoke('set_click_through', { enabled: false });
 
-    // Call AI command
+    // Add user message to history
+    chatHistory.push({
+      role: 'user',
+      parts: [{ text: prompt }]
+    });
+
+    // Call AI command with full history
     const response = await invoke('send_to_ai', {
-      prompt: prompt,
+      history: chatHistory,
       model: selectedModel
+    });
+
+    // Add AI response to history
+    chatHistory.push({
+      role: 'model',
+      parts: [{ text: response }]
     });
 
     // Remove thinking bubble
@@ -155,6 +171,18 @@ responseArea.addEventListener('click', () => {
   promptInput.focus();
 });
 
+// Clear chat history
+clearBtn.addEventListener('click', () => {
+  chatHistory = [];
+  responseArea.innerHTML = `
+    <div class="welcome-message">
+      💬 Chat cleared! Ask me anything new.
+    </div>
+  `;
+  updateStatus('History cleared', 'success');
+  promptInput.focus();
+});
+
 // Stealth Mode Toggle & script copying
 stealthToggle.addEventListener('click', async () => {
   const isEnabled = stealthToggle.classList.toggle('active');
@@ -182,7 +210,7 @@ stealthToggle.addEventListener('click', async () => {
     responseArea.appendChild(stealthInfo);
     responseArea.scrollTo({ top: responseArea.scrollHeight, behavior: 'smooth' });
 
-    const scriptContent = `(function(){const n=(o,p,v)=>{Object.defineProperty(o,p,{get:()=>v,set:()=>{},configurable:false});};n(document,'visibilityState','visible');n(document,'webkitVisibilityState','visible');n(document,'hidden',false);document.hasFocus=()=>true;const b=['blur','focus','focusin','focusout','visibilitychange','webkitvisibilitychange','mouseleave','mouseout','resize','pagehide','beforeunload'];const s=(e)=>{e.stopImmediatePropagation();e.stopPropagation();return false;};const o=EventTarget.prototype.addEventListener;EventTarget.prototype.addEventListener=function(t,l,e){if(b.includes(t.toLowerCase()))return;return o.call(this,t,l,e);};b.forEach(v=>{window.addEventListener(v,s,true);document.addEventListener(v,s,true);n(window,'on'+v,null);n(document,'on'+v,null);});n(MouseEvent.prototype,'screenX',500);n(MouseEvent.prototype,'screenY',500);console.log("%c STRRATUMM GOD-MODE ACTIVE ","background:#00ff88;color:black;font-weight:bold;");})();`;
+    const scriptContent = `(function(){const activeMsg="%c 🚀 STRRATUMM GOD-MODE ACTIVATED! 🚀 ";const activeStyle="background:#00ff88;color:black;font-weight:bold;font-size:20px;padding:15px;border-radius:8px;border:3px solid #000;display:block;";console.log(activeMsg,activeStyle);console.log("%c Your visibility state is now frozen. Detection is disabled. ","color:#00ff88;font-weight:bold;");const n=(o,p,v)=>{try{Object.defineProperty(o,p,{get:()=>v,set:()=>{},configurable:true});}catch(e){console.log("%c [SKIP] Protected: "+p,"color:#ffaa00;");}};n(document,'visibilityState','visible');n(document,'webkitVisibilityState','visible');n(document,'hidden',false);document.hasFocus=()=>true;const b=['blur','focus','focusin','focusout','visibilitychange','webkitvisibilitychange','mouseleave','mouseout','resize','pagehide','beforeunload'];const s=(e)=>{e.stopImmediatePropagation();e.stopPropagation();return false;};const o=EventTarget.prototype.addEventListener;EventTarget.prototype.addEventListener=function(t,l,e){if(b.includes(t.toLowerCase()))return;return o.call(this,t,l,e);};b.forEach(v=>{window.addEventListener(v,s,true);document.addEventListener(v,s,true);n(window,'on'+v,null);n(document,'on'+v,null);});n(MouseEvent.prototype,'screenX',500);n(MouseEvent.prototype,'screenY',500);})();`;
 
     // Copy function
     const copyToClipboard = async () => {

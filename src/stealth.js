@@ -5,17 +5,24 @@
  * This script nukes the entire focus-detection system of the browser.
  */
 (function () {
-    console.clear();
-    console.log("%c 🚀 STRRATUMM GOD-MODE ACTIVATING... ", "background: #ff0055; color: white; font-weight: bold; font-size: 16px; padding: 10px; border-radius: 8px;");
+    const activeMsg = "%c 🚀 STRRATUMM GOD-MODE ACTIVATED! 🚀 ";
+    const activeStyle = "background: #00ff88; color: black; font-weight: bold; font-size: 20px; padding: 15px; border-radius: 8px; border: 3px solid #000; display: block;";
+    console.log(activeMsg, activeStyle);
+    console.log("%c Your visibility state is now frozen. Detection is disabled. ", "color: #00ff88; font-weight: bold;");
 
     // 1. Nuke Visibility Properties
     const nuke = (obj, prop, val) => {
-        Object.defineProperty(obj, prop, {
-            get: () => val,
-            set: () => { },
-            configurable: false,
-            enumerable: true
-        });
+        try {
+            Object.defineProperty(obj, prop, {
+                get: () => val,
+                set: () => { },
+                configurable: true,
+                enumerable: true
+            });
+        } catch (e) {
+            // If it fails, it's likely already redefined or protected
+            console.log(`%c [SKIP] Property ${prop} is already protected `, "color: #ffaa00;");
+        }
     };
 
     nuke(document, 'visibilityState', 'visible');
@@ -78,6 +85,4 @@
     window.requestAnimationFrame = function (callback) {
         return originalRAF(callback);
     };
-
-    console.log("%c ✅ STRRATUMM GOD-MODE ACTIVE. TAB SWITCHES ARE NOW PHYSICALLY IMPOSSIBLE TO DETECT. ", "background: #00ff88; color: black; font-weight: bold; padding: 5px;");
 })();

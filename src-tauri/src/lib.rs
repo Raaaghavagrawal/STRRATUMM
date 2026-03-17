@@ -84,12 +84,13 @@ struct GeminiRequest {
     contents: Vec<GeminiContent>,
 }
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, serde::Deserialize, Clone)]
 struct GeminiContent {
+    role: String,
     parts: Vec<GeminiPart>,
 }
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, serde::Deserialize, Clone)]
 struct GeminiPart {
     text: String,
 }
@@ -102,17 +103,7 @@ struct GeminiResponse {
 
 #[derive(serde::Deserialize)]
 struct GeminiCandidate {
-    content: Option<GeminiContentResponse>,
-}
-
-#[derive(serde::Deserialize)]
-struct GeminiContentResponse {
-    parts: Option<Vec<GeminiPartResponse>>,
-}
-
-#[derive(serde::Deserialize)]
-struct GeminiPartResponse {
-    text: Option<String>,
+    content: Option<GeminiContent>,
 }
 
 #[derive(serde::Deserialize)]
@@ -183,7 +174,7 @@ async fn get_best_available_model(api_key: &str) -> Result<(String, String), Str
 
 // Command to send request to AI
 #[tauri::command]
-async fn send_to_ai(prompt: String, model: String) -> Result<String, String> {
+async fn send_to_ai(history: Vec<GeminiContent>, model: String) -> Result<String, String> {
     // Check for API Key
     let api_key = std::env::var("GEMINI_API_KEY")
         .map_err(|_| "GEMINI_API_KEY environment variable not set. Please check your .env file.".to_string())?;
@@ -209,11 +200,7 @@ async fn send_to_ai(prompt: String, model: String) -> Result<String, String> {
     println!("Requesting URL: https://generativelanguage.googleapis.com/{}/models/{}:generateContent?key=MASKED", api_version, model_name);
 
     let request_body = GeminiRequest {
-        contents: vec![GeminiContent {
-            parts: vec![GeminiPart {
-                text: prompt,
-            }],
-        }],
+        contents: history,
     };
 
     let res = client.post(&url)
@@ -239,12 +226,8 @@ async fn send_to_ai(prompt: String, model: String) -> Result<String, String> {
     if let Some(candidates) = response_json.candidates {
         if let Some(candidate) = candidates.first() {
             if let Some(content) = &candidate.content {
-                if let Some(parts) = &content.parts {
-                    if let Some(part) = parts.first() {
-                        if let Some(text) = &part.text {
-                            return Ok(text.clone());
-                        }
-                    }
+                if let Some(part) = content.parts.first() {
+                    return Ok(part.text.clone());
                 }
             }
         }
