@@ -1,4 +1,9 @@
-# Tauri + Vanilla
+# ai-overlay-backend
+
+![CI/CD Status](https://github.com/${{ github.repository }}/actions/workflows/ci.yml/badge.svg)
+
+## Tauri + Vanilla
+
 
 This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.
 

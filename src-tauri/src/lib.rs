@@ -1,7 +1,13 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use tauri::Manager;
 use tauri_plugin_global_shortcut::GlobalShortcutExt;
 use std::sync::Mutex;
+
+pub mod handlers;
+pub mod models;
+pub mod routes;
+pub mod state;
+pub mod errors;
+
 
 // State to track if overlay is currently visible
 struct OverlayState {

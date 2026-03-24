@@ -1,0 +1,17 @@
+target/
+target-x86_64-pc-windows-msvc/
+node_modules/
+.git/
+.env
+.env.local
+.env.*.local
+*.log
+src/
+dist/
+public/
+tauri.conf.json
+gen/
+capabilities/
+icons/
+build.rs
+README.md
