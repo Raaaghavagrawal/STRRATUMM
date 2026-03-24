@@ -7,7 +7,10 @@ use tower_http::trace::TraceLayer;
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 
-use crate::handlers::{health::health_check, data::{create_data, get_all_data, CreateDataRequest}};
+use crate::handlers::{
+    data::{create_data, get_all_data, CreateDataRequest},
+    health::health_check,
+};
 use crate::models::Data;
 use crate::state::AppState;
 
@@ -32,7 +35,7 @@ pub fn create_router(state: AppState) -> Router {
         .allow_origin(Any)
         .allow_methods(Any)
         .allow_headers(Any);
-    
+
     Router::new()
         .merge(SwaggerUi::new("/docs").url("/api-doc/openapi.json", ApiDoc::openapi()))
         .route("/health", get(health_check))
@@ -42,4 +45,3 @@ pub fn create_router(state: AppState) -> Router {
         .layer(TraceLayer::new_for_http())
         .with_state(state)
 }
-

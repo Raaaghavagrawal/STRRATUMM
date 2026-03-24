@@ -13,9 +13,10 @@ async fn main() {
 
     // Initialize tracing
     tracing_subscriber::registry()
-
-        .with(tracing_subscriber::EnvFilter::try_from_default_env()
-            .unwrap_or_else(|_| "ai_overlay=debug,tower_http=debug".into()))
+        .with(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| "ai_overlay=debug,tower_http=debug".into()),
+        )
         .with(tracing_subscriber::fmt::layer())
         .init();
 
@@ -34,7 +35,7 @@ async fn main() {
     // Run Axum server in a separate task
     let addr = format!("0.0.0.0:{}", port);
     println!("Starting Axum server on {}", addr);
-    
+
     let server_handle = tokio::spawn(async move {
         let listener = TcpListener::bind(&addr).await.unwrap();
         axum::serve(listener, app).await.unwrap();
@@ -49,4 +50,3 @@ async fn main() {
         ai_overlay_lib::run();
     }
 }
-

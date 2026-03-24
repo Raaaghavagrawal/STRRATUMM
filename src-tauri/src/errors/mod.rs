@@ -1,9 +1,9 @@
-use serde::Serialize;
 use axum::{
     http::StatusCode,
     response::{IntoResponse, Response},
     Json,
 };
+use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct AppError {
@@ -16,6 +16,7 @@ impl IntoResponse for AppError {
         (
             StatusCode::from_u16(self.status).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR),
             Json(self),
-        ).into_response()
+        )
+            .into_response()
     }
 }

@@ -1,5 +1,5 @@
-use std::sync::{Arc, Mutex};
 use crate::models::Data;
+use std::sync::{Arc, Mutex};
 
 pub type AppState = Arc<Mutex<AppStateInner>>;
 
