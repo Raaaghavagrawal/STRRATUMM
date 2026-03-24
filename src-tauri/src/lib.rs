@@ -49,7 +49,10 @@ async fn set_click_through(app: tauri::AppHandle, enabled: bool) -> Result<(), S
 }
 
 // Internal function to set click-through using Windows API
-fn set_click_through_internal(_window: &tauri::WebviewWindow, _enabled: bool) -> Result<(), String> {
+fn set_click_through_internal(
+    _window: &tauri::WebviewWindow,
+    _enabled: bool,
+) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
         use windows::Win32::Foundation::HWND;
