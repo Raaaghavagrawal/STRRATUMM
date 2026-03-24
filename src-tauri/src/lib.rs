@@ -49,7 +49,7 @@ async fn set_click_through(app: tauri::AppHandle, enabled: bool) -> Result<(), S
 }
 
 // Internal function to set click-through using Windows API
-fn set_click_through_internal(window: &tauri::WebviewWindow, enabled: bool) -> Result<(), String> {
+fn set_click_through_internal(_window: &tauri::WebviewWindow, _enabled: bool) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
         use windows::Win32::Foundation::HWND;
@@ -57,13 +57,13 @@ fn set_click_through_internal(window: &tauri::WebviewWindow, enabled: bool) -> R
             GetWindowLongPtrW, SetWindowLongPtrW, GWL_EXSTYLE, WS_EX_LAYERED, WS_EX_TRANSPARENT,
         };
 
-        let hwnd = window.hwnd().map_err(|e| e.to_string())?;
+        let hwnd = _window.hwnd().map_err(|e| e.to_string())?;
         let hwnd = HWND(hwnd.0);
 
         unsafe {
             let ex_style = GetWindowLongPtrW(hwnd, GWL_EXSTYLE);
 
-            let new_style = if enabled {
+            let new_style = if _enabled {
                 // Enable click-through
                 ex_style | (WS_EX_LAYERED.0 | WS_EX_TRANSPARENT.0) as isize
             } else {
