@@ -1,5 +1,5 @@
 # --- Stage 1: Builder ---
-FROM rust:1.75-bookworm as builder
+FROM rust:1.75-bookworm AS builder
 
 # Set working directory inside the container
 WORKDIR /app
@@ -25,6 +25,7 @@ COPY Cargo.toml Cargo.lock ./
 # Create a dummy source file to compile only dependencies
 RUN mkdir src \
     && echo "fn main() {println!(\"if you see this, the build failed\")}" > src/main.rs \
+    && echo "" > src/lib.rs \
     && cargo build --release \
     && rm -rf src/
 
@@ -36,7 +37,7 @@ COPY . .
 RUN cargo build --release
 
 # --- Stage 2: Runtime ---
-FROM debian:bookworm-slim as runtime
+FROM debian:bookworm-slim AS runtime
 
 # Install runtime dependencies (ca-certificates for HTTPS/APIs)
 RUN apt-get update && apt-get install -y \
