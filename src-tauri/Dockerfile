@@ -1,5 +1,5 @@
 # --- Stage 1: Builder ---
-FROM rust:1.75-bookworm AS builder
+FROM rust:latest AS builder
 
 # Set working directory inside the container
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 COPY Cargo.toml Cargo.lock ./
 
 # Create a dummy source file to compile only dependencies
-RUN mkdir src \
+RUN mkdir -p src ../src \
     && echo "fn main() {println!(\"if you see this, the build failed\")}" > src/main.rs \
     && echo "" > src/lib.rs \
     && cargo build --release \
@@ -31,6 +31,10 @@ RUN mkdir src \
 
 # Copy the actual source code
 COPY . .
+
+# Create a dummy frontend directory so Tauri's generate_context! doesn't complain
+# based on the frontendDist: "../src" in tauri.conf.json
+RUN mkdir -p ../src
 
 # Build the final binary
 # We use the binary name from Cargo.toml (ai-overlay)

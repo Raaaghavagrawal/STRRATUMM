@@ -6,12 +6,8 @@ node_modules/
 .env.local
 .env.*.local
 *.log
-src/
+
+# Only ignore things that are not needed for the Rust build
 dist/
 public/
-tauri.conf.json
-gen/
-capabilities/
-icons/
-build.rs
 README.md
