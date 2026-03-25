@@ -41,7 +41,7 @@ RUN mkdir -p ../src
 RUN cargo build --release
 
 # --- Stage 2: Runtime ---
-FROM debian:bookworm-slim AS runtime
+FROM rust:latest AS runtime
 
 # Install runtime dependencies (ca-certificates for HTTPS/APIs)
 RUN apt-get update && apt-get install -y \
