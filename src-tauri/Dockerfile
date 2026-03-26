@@ -1,5 +1,5 @@
 # --- Stage 1: Builder ---
-FROM rust:latest AS builder
+FROM rust:latest-bookworm AS builder
 
 # Set working directory inside the container
 WORKDIR /app
@@ -41,7 +41,7 @@ RUN mkdir -p ../src
 RUN cargo build --release
 
 # --- Stage 2: Runtime ---
-FROM rust:latest AS runtime
+FROM debian:bookworm-slim
 
 # Install runtime dependencies (ca-certificates for HTTPS/APIs)
 RUN apt-get update && apt-get install -y \
