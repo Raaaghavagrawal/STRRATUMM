@@ -1,5 +1,5 @@
 # --- Stage 1: Builder ---
-FROM rust:bookworm AS builder
+FROM rust:bookworm
 
 # Set working directory inside the container
 WORKDIR /app
