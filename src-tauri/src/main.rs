@@ -19,18 +19,8 @@ async fn main() {
         )
         .with(tracing_subscriber::fmt::layer())
         .init();
-
-    // Create shared state
     let state = create_state();
-
-    // Create Axum Router
     let app = create_router(state);
-
-    // Get port from environment or default to 3001
-    let port = std::env::var("API_PORT")
-        .ok()
-        .and_then(|p| p.parse().ok())
-        .unwrap_or(3001);
 
     // Run Axum server in a separate task (hardcoded to 0.0.0.0 for Docker)
     let addr = "0.0.0.0:3001";
