@@ -55,7 +55,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy the binary from the builder stage
-COPY --from=builder /app/target/release/ai-overlay /app/ai-overlay
+COPY --from=0 /app/target/release/ai-overlay /usr/local/bin/ai-overlay
 
 # Expose the API port (as per requirements)
 EXPOSE 3001
@@ -66,4 +66,4 @@ ENV SERVER_ONLY=true
 ENV RUST_LOG=info
 
 # Run the backend API only
-CMD ["./ai-overlay"]
+ENTRYPOINT ["ai-overlay"]
