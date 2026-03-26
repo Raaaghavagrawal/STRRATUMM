@@ -32,12 +32,12 @@ async fn main() {
         .and_then(|p| p.parse().ok())
         .unwrap_or(3001);
 
-    // Run Axum server in a separate task
-    let addr = format!("0.0.0.0:{}", port);
+    // Run Axum server in a separate task (hardcoded to 0.0.0.0 for Docker)
+    let addr = "0.0.0.0:3001";
     println!("Starting Axum server on {}", addr);
 
     let server_handle = tokio::spawn(async move {
-        let listener = TcpListener::bind(&addr).await.unwrap();
+        let listener = TcpListener::bind(addr).await.unwrap();
         axum::serve(listener, app).await.unwrap();
     });
 
