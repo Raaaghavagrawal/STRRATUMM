@@ -13,12 +13,14 @@ RUN apt-get update && apt-get install -y \
     libgtk-3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Cache buster to force fresh build if needed
+# Cache buster to force fresh build
 ARG CACHE_BUST=1
 
 # Copy project files
-COPY Cargo.toml Cargo.lock ./
 COPY . .
+
+# Create a dummy frontend directory so Tauri's generate_context! doesn't complain
+RUN mkdir -p ../src
 
 # Build the binary
 RUN cargo build --release
