@@ -136,8 +136,8 @@ jobs:
           context: ./src-tauri
           file: ./src-tauri/Dockerfile
           push: true
+          no-cache: true
           tags: |
             ghcr.io/raaaghavagrawal/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/raaaghavagrawal/${{ env.IMAGE_NAME }}:v1
             ghcr.io/raaaghavagrawal/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
