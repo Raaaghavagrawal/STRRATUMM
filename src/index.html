@@ -1,75 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Overlay</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strratumm | Advanced AI Overlay & Stealth System</title>
+    <meta name="description" content="Strratumm provides premium AI overlay solutions and stealth bypass systems for modern browser environments.">
+    <link rel="stylesheet" href="landing.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <div class="overlay-container">
-    <!-- Header -->
-    <div class="header">
-      <div class="title-group">
-        <h1 class="title">✨ AI Overlay</h1>
-        <div class="stealth-badge" id="stealth-toggle" title="Enable Stealth Bypass Script">
-          <span class="pulse"></span>
-          Stealth OFF
-        </div>
-        <button class="clear-btn" id="clear-btn" title="Clear Conversation Memory">
-          🗑️ Clear
-        </button>
-      </div>
-      <button class="close-btn" id="close-btn" title="Close (Esc)">×</button>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
     </div>
 
-    <!-- Response area -->
-    <div class="response-area" id="response-area">
-      <div class="welcome-message">
-        💬 Ask me anything! Press Ctrl+Space to toggle visibility.
-      </div>
-    </div>
+    <header>
+        <div class="logo">STRRATUMM<span>STABLE v0.1</span></div>
+        <nav>
+            <a href="#console-breaker">Console Breaker</a>
+            <a href="https://github.com" target="_blank">Documentation</a>
+            <a href="https://github.com" target="_blank">GitHub</a>
+        </nav>
+    </header>
 
-    <!-- Input form -->
-    <form class="input-form" id="ai-form">
-      <div class="input-wrapper">
-        <input type="text" id="prompt-input" class="prompt-input" placeholder="Ask ChatGPT or Gemini anything..."
-          autocomplete="off" autofocus />
-        <button type="submit" class="send-btn" title="Send (Enter)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
-      </div>
+    <main>
+        <section class="hero">
+            <div class="badge">Next Generation Stealth</div>
+            <h1>Break the Boundaries of <span>Digital Environments</span></h1>
+            <p>The ultimate AI-powered overlay designed for seamless integration and total invisibility. Access Gemini 1.5 Flash instantly with zero friction.</p>
+            <div class="cta-group">
+                <a href="#console-breaker" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                    Explore Breaker
+                </a>
+                <a href="#" class="btn btn-outline">Native Application</a>
+            </div>
+        </section>
 
-      <div class="ai-selector">
-        <label>
-          <input type="radio" name="ai-model" value="gemini" checked />
-          <span>🤖 Gemini 1.5 Flash</span>
-        </label>
-        <label>
-          <input type="radio" name="ai-model" value="chatgpt" disabled />
-          <span>💬 OpenAI (Coming Soon)</span>
-        </label>
-      </div>
+        <section class="console-breaker" id="console-breaker">
+            <h2 class="section-title">Console Breaker</h2>
+            
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <div class="terminal-title">strratumm_bypass_engine_v1.sh</div>
+                </div>
+                <div class="terminal-body">
+                    <p style="margin-bottom: 2rem; color: var(--text-muted);">// Use this payload to neutralize visibility detection systems on target platforms.</p>
+                    
+                    <div class="code-block" id="script-preview">
+                        <span class="copy-hint">READ ONLY PREVIEW</span>
+                        <code>// Loading encrypted core logic...</code>
+                    </div>
 
-      <div class="status-bar" id="status-bar">
-        <div class="status-indicator"></div>
-        <span class="status-text">Ready to chat</span>
-      </div>
-    </form>
-  </div>
+                    <div class="activate-container">
+                        <button id="breaker-btn">ACTIVATE CLOUD BYPASS</button>
+                        <div class="status-indicator">
+                            <span class="pulse"></span>
+                            <span class="status-text">Ready for injection</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="main.js"></script>
+    <footer>
+        <p>&copy; 2026 STRRATUMM SYSTENMS. All rights reserved.</p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.5;">Strratumm is for educational and research purposes only.</p>
+    </footer>
+
+    <script src="landing.js"></script>
 </body>
-
 </html>
